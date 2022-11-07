@@ -7,7 +7,7 @@ LD_PRELOAD="/usr/lib/$(uname -m)-linux-gnu/libstdc++.so.6"
 export LD_PRELOAD
 
 function run_check_with_retries {
-	echo "RUNNING run_check_with_retries"
+    echo "RUNNING run_check_with_retries"
     local cmd
     cmd="${1}"
     local countdown
@@ -44,7 +44,7 @@ function run_check_with_retries {
 }
 
 function run_nc() {
-	echo "RUNNING run_nc"
+    echo "RUNNING run_nc"
     # Checks if it is possible to connect to the host using netcat.
     #
     # We want to avoid misleading messages and perform only forward lookup of the service IP address.
@@ -65,7 +65,7 @@ function run_nc() {
 
 
 function wait_for_connection {
-	echo "RUNNING wait_for_connection"
+    echo "RUNNING wait_for_connection"
     # Waits for Connection to the backend specified via URL passed as first parameter
     # Detects backend type depending on the URL schema and assigns
     # default port numbers if not specified in the URL.
@@ -113,7 +113,7 @@ function wait_for_connection {
 }
 
 function create_www_user() {
-	echo "RUNNING create_www_user"
+    echo "RUNNING create_www_user"
     local local_password=""
     # Warning: command environment variables (*_CMD) have priority over usual configuration variables
     # for configuration parameters that require sensitive information. This is the case for the SQL database
@@ -142,7 +142,7 @@ function create_www_user() {
 }
 
 function create_system_user_if_missing() {
-	echo "RUNNING create_system_user_if_missing"
+    echo "RUNNING create_system_user_if_missing"
     # This is needed in case of OpenShift-compatible container execution. In case of OpenShift random
     # User id is used when starting the image, however group 0 is kept as the user group. Our production
     # Image is OpenShift compatible, so all permissions on all folders are set so that 0 group can exercise
@@ -160,7 +160,7 @@ function create_system_user_if_missing() {
 }
 
 function set_pythonpath_for_root_user() {
-	echo "RUNNING set_pythonpath_for_root_user"
+    echo "RUNNING set_pythonpath_for_root_user"
     # Airflow is installed as a local user application which means that if the container is running as root
     # the application is not available. because Python then only load system-wide applications.
     # Now also adds applications installed as local user "airflow".
@@ -173,19 +173,19 @@ function set_pythonpath_for_root_user() {
 }
 
 function wait_for_airflow_db() {
-	echo "RUNNING wait_for_airflow_db"
+    echo "RUNNING wait_for_airflow_db"
     # Wait for the command to run successfully to validate the database connection.
     run_check_with_retries "airflow db check"
 }
 
 function upgrade_db() {
-	echo "RUNNING upgrade_db"
+    echo "RUNNING upgrade_db"
     # Runs airflow db upgrade
     airflow db upgrade || true
 }
 
 function wait_for_celery_broker() {
-	echo "RUNNING wait_for_celery_broker"
+    echo "RUNNING wait_for_celery_broker"
     # Verifies connection to Celery Broker
     local executor
     executor="$(airflow config get-value core executor)"
@@ -197,7 +197,7 @@ function wait_for_celery_broker() {
 }
 
 function exec_to_bash_or_python_command_if_specified() {
-	echo "RUNNING wait_for_celery_broker"
+    echo "RUNNING wait_for_celery_broker"
     # If one of the commands: 'bash', 'python' is used, either run appropriate
     # command with exec
     if [[ ${AIRFLOW_COMMAND} == "bash" ]]; then
@@ -210,7 +210,7 @@ function exec_to_bash_or_python_command_if_specified() {
 }
 
 function check_uid_gid() {
-	echo "RUNNING wait_for_celery_broker"
+    echo "RUNNING wait_for_celery_broker"
     if [[ $(id -g) == "0" ]]; then
         return
     fi
