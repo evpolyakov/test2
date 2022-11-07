@@ -197,7 +197,7 @@ function wait_for_celery_broker() {
 }
 
 function exec_to_bash_or_python_command_if_specified() {
-    echo "RUNNING wait_for_celery_broker"
+    echo "RUNNING exec_to_bash_or_python_command_if_specified"
     # If one of the commands: 'bash', 'python' is used, either run appropriate
     # command with exec
     if [[ ${AIRFLOW_COMMAND} == "bash" ]]; then
@@ -210,7 +210,7 @@ function exec_to_bash_or_python_command_if_specified() {
 }
 
 function check_uid_gid() {
-    echo "RUNNING wait_for_celery_broker"
+    echo "RUNNING check_uid_gid"
     if [[ $(id -g) == "0" ]]; then
         return
     fi
@@ -296,6 +296,7 @@ fi
 
 if [[ ${AIRFLOW_COMMAND} =~ ^(scheduler|celery)$ ]] \
     && [[ "${CONNECTION_CHECK_MAX_COUNT}" -gt "0" ]]; then
+	echo "@@@@@@ IF wait_for_celery_broker"
     wait_for_celery_broker
 fi
 
